@@ -19,20 +19,21 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
-BASE_URL = "https://s2026.conference-schedule.org"
-DATES = ["2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23"]
-VERSION_PARAM = "v=1778950960"
+YEAR = "YYYY"  # Set during Step 2, e.g. "2026"
+BASE_URL = f"https://s{YEAR}.conference-schedule.org"
+DATES = []  # Set during Step 2, e.g. ["2026-07-19", "2026-07-20", ...]
+VERSION_PARAM = ""  # Set during Step 2, e.g. "v=1778950960"
 
-# Session types to include for SIGGRAPH 2026.
+# Session types the user wants to attend, set during Step 3 based on their answer.
 # Format: etype_code -> abbreviated label for calendar title.
-# Adjust each year based on what you want to attend.
+# Example (codes vary by year — re-check the site's etype_filt options):
+#   "sstype102": "365",       # ACM SIGGRAPH 365
+#   "evtt108":   "Pan:",      # Panels
+#   "sstype124": "ProdSess:", # Production Sessions
+#   "evtt111":   "Talk:",     # Talks
+#   "sstype132": "Pap:",      # Technical Papers
+#   "evtt103":   "Crs:",      # Courses
 WANTED_TYPES = {
-    "sstype102": "365",
-    "evtt108":   "Pan:",
-    "sstype124": "ProdSess:",
-    "evtt111":   "Talk:",
-    "sstype132": "Pap:",
-    # "evtt103": "Crs:",  # Courses: none wanted for 2026, keep for future years
 }
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}

@@ -16,9 +16,10 @@ from pathlib import Path
 
 LA_TZ = timezone(timedelta(hours=-7))  # PDT in July
 
+YEAR = "YYYY"  # Set during Step 2 to match scrape.py, e.g. "2026"
 CSV_PATH = "sessions.csv"
 JSON_PATH = "sessions_details.json"
-ICS_PATH = "siggraph2026.ics"
+ICS_PATH = f"siggraph{YEAR}.ics"
 
 
 def escape_ics(text):
@@ -52,8 +53,8 @@ def format_dt(dt):
 
 def stable_uid(session_id):
     """Deterministic UID based on session_id — same session always gets the same UID."""
-    h = hashlib.sha1(f"siggraph2026-{session_id}".encode()).hexdigest()
-    return f"{h[:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}@siggraph2026"
+    h = hashlib.sha1(f"siggraph{YEAR}-{session_id}".encode()).hexdigest()
+    return f"{h[:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}@siggraph{YEAR}"
 
 
 def build_notes(detail, user_notes=""):
@@ -143,10 +144,10 @@ def main():
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//SIGGRAPH 2026 Schedule//EN",
+        f"PRODID:-//SIGGRAPH {YEAR} Schedule//EN",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
-        "X-WR-CALNAME:SIGGRAPH 2026",
+        f"X-WR-CALNAME:SIGGRAPH {YEAR}",
         "X-WR-TIMEZONE:America/Los_Angeles",
     ]
 

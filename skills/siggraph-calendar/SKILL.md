@@ -37,15 +37,15 @@ Ask the user: **"Which year's SIGGRAPH are you building a calendar for?"**
 
 The schedule URL pattern is `https://s{YEAR}.conference-schedule.org/`. Confirm the site is live.
 
-Extract three values from the page source and update them in `scrape.py`:
+Set **`YEAR`** at the top of `scrape.py` (e.g. `"2026"`) — `BASE_URL` is derived from it automatically.
 
-**`BASE_URL`** — the site root, e.g. `https://s2026.conference-schedule.org`
+Extract two more values from the page source and update them in `scrape.py`:
 
 **`DATES`** — conference dates. Find in `<select name="date_sel">` option values.
 
 **`VERSION_PARAM`** — cache-buster on the day files. Search the page source for `wp_program_view_all_` and copy the `?v=XXXXXXXXXX` suffix.
 
-Also update the year references in `generate_ics.py`: `ICS_PATH` and the `siggraph2026-` prefix inside `stable_uid()`.
+Also set **`YEAR`** at the top of `generate_ics.py` to match — `ICS_PATH`, the calendar name, and event UIDs are all derived from it.
 
 ---
 
